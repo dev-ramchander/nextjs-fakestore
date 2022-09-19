@@ -20,7 +20,10 @@ export default function Home() {
     import("../components/common/frontend/FakeStore/FeaturedProducts")
   );
   const TodaysDeal = dynamic(() =>
-    import("../components/common/frontend/FakeStore/TodaysDeal")
+    import("../components/common/frontend/FakeStore/TodaysDeal/")
+  );
+  const FeaturedCategory = dynamic(() =>
+    import("../components/common/frontend/Category/FeaturedCategory")
   );
   const FadeLoader = dynamic(() => import("../components/Loader/FadeLoader"));
   useEffect(() => {
@@ -39,7 +42,13 @@ export default function Home() {
           </center>
         )}
 
-        <TodaysDeal />
+        {isLoading ? (
+          <FeaturedCategory />
+        ) : (
+          <FadeLoader size="10" color="#b5b5b5" />
+        )}
+
+        {isLoading ? <TodaysDeal /> : <FadeLoader size="10" color="#b5b5b5" />}
         {isLoading ? <RamdomUser /> : <FadeLoader size="10" color="#b5b5b5" />}
         <Footer />
       </div>

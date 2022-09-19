@@ -5,12 +5,12 @@ import { defaultValues } from "../../../../constant";
 import { randomNo } from "../../../../utils/functions";
 import Link from "next/link";
 
-function FeaturedProducts() {
+function HomePageProducts() {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [products, setProducts] = useState([]);
   const FadeLoader = dynamic(() => import("../../../Loader/FadeLoader"));
-  const ProductList = dynamic(() => import("./ProductList"));
+  const ProductList = dynamic(() => import("../FakeStore/ProductList"));
   useEffect(() => {
     setLoading(true);
     fetchProducts();
@@ -20,7 +20,14 @@ function FeaturedProducts() {
     try {
       var _;
       const res = await fetch(
-        `${endPoints.products}${defaultValues.featuredProduct}`
+        endPoints.products +
+          "?limit=" +
+          defaultValues.homePageProductsLimit +
+          "&offset=" +
+          randomNo(
+            defaultValues.minProductOffset,
+            defaultValues.maxProductOffset
+          )
       );
       const _data = await res.json();
 
@@ -43,21 +50,20 @@ function FeaturedProducts() {
   return (
     <section className="text-gray-600 pt-1 pb-10 body-font">
       <div className="container px-5 mx-auto">
-        <section className="flex flex-wrap my-3 pr-5 pb-5">
+        <section className="flex flex-wrap my-3 pr-5">
           <div className="md:w-4/5 text-left">
-            <h1 className="sm:text text-left tracking-widest title-font text-gray-500 font-bold uppercase">
-              Featured products
-            </h1>
+            <h1 className="sm:text text-left font-medium title-font text-gray-900">Platzi Fake Store</h1>
           </div>
           <div className="md:w-1/5 text-right">
-            <Link href="/products">
-              <a className="text-black py-1 transition-colors duration-300 outline-none hover:border-black border-transparent border-b-4 hover:border-current font-bold tracking-widest">
+            <Link href='/products'>
+              <a className="text-indigo-700 py-1 transition-colors duration-300 outline-none hover:border-indigo-700 border-transparent border-b-4 hover:border-current">
                 VIEW ALL
               </a>
+              
             </Link>
           </div>
         </section>
-        <div className="flex flex-wrap ">
+        <div className="flex flex-wrap">
           {products.map((_product, index) => {
             const { images, title, category, description, price, id } =
               _product;
@@ -151,4 +157,4 @@ function FeaturedProducts() {
   );
 }
 
-export default FeaturedProducts;
+export default HomePageProducts;

@@ -5,7 +5,7 @@ function ProductList(props) {
   const rattingValue = randomNo(3, 5);
   return (
     <div className="lg:w-1/4 md:w-1/2 pr-4 pb-2 w-full cursor-pointer transform transition duration-200 hover:scale-105">
-      <a className="block w-300 relative  overflow-hidden ">
+      <a className="block w-300 relative overflow-hidden ">
         <Image
           alt={props.name}
           className="object-cover object-center w-full h-full block rounded-lg"
