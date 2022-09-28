@@ -4,7 +4,7 @@ import LayouApp from "../layout/LayoutApp";
 function MyApp({ Component, pageProps }) {
   return (
     <LayouApp>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </LayouApp>
   );
 }

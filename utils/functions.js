@@ -55,3 +55,8 @@ export function loadMoreIds(_val){
     }
     return ids;
 }
+
+export function productDiscount(price, discInPercentage) {
+  var discountedprice = price - (discInPercentage / 100) * price;
+  return discountedprice.toFixed(2)
+}

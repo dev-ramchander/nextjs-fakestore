@@ -98,4 +98,4 @@ function MainHeader(props) {
     </nav>
   );
 }
-export default MainHeader;
+export default MainHeader

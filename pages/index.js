@@ -17,10 +17,10 @@ export default function Home() {
     import("../components/common/frontend/RamdomUser")
   );
   const FeaturedProducts = dynamic(() =>
-    import("../components/common/frontend/FakeStore/FeaturedProducts")
+    import("../components/common/frontend/DummyJson/FeaturedProducts")
   );
   const TodaysDeal = dynamic(() =>
-    import("../components/common/frontend/FakeStore/TodaysDeal/")
+    import("../components/common/frontend/DummyJson/TodaysDeal")
   );
   const FeaturedCategory = dynamic(() =>
     import("../components/common/frontend/Category/FeaturedCategory")

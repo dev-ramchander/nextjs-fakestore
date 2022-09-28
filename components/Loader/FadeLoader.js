@@ -9,7 +9,7 @@ function Loader(props) {
             <FadeLoader size={props.size} color={props.color} />
         </div>
       </div>
-  );
+  )
 }
 
 export default Loader;

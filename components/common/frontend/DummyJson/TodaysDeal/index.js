@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { endPoints } from "../../../../../constant/endpoints";
 import { defaultValues } from "../../../../../constant";
-import { randomNo } from "../../../../../utils/functions";
+import { randomNo, productDiscount } from "../../../../../utils/functions";
 import Ratings from "react-ratings-declarative";
 import Link from "next/link";
 import Image from "next/image";
@@ -41,9 +41,9 @@ function TodaysDeal(params) {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch(`${endPoints.products}/${randomNo(1, 200)}`);
+      const res = await fetch(`${endPoints.dummyProducts}/${randomNo(1, 30)}`);
       const _data = await res.json();
-
+      console.log('deal of the day ===> ', _data)
       if( _data.statusCode == 404 ){
         setError(true)
       } else {
@@ -52,7 +52,6 @@ function TodaysDeal(params) {
         setProductsImages(_data.images);
       }
       setLoading(false);
-      console.log("deals of the day: ", _data);
     } catch (err) {
       console.log("try catch error logs: =====> ", err);
       setLoading(false);
@@ -79,15 +78,15 @@ function TodaysDeal(params) {
           <div className="flex flex-wrap">
             { error ? <FeaturedProductsError />  
               :<><div className="md:w-3/5">
-                <div className="flex flex-wrap ">
+                <div className="flex flex-wrap text-center">
                   <div className="md:w-5/6 ">
                     <Image
                       alt={products.title}
                       className="rounded-lg"
-                      src={productsImages[0]}
-                      width="600"
-                      height="480"
-                      layout="responsive" />
+                      src={products.thumbnail}
+                      width="450"
+                      height="420"
+                      objectFit="contain" />
                   </div>
                   <div className="md:w-1/6 ">
                     {productsImages.map((_product) => {
@@ -95,11 +94,11 @@ function TodaysDeal(params) {
                         <div key={randomNo(1, 10000)} className="pl-4 pb-4">
                           <Image
                             alt={products.title}
-                            className="w-full cursor-pointer rounded-lg"
+                            className="w-50 h-50 cursor-pointer rounded-lg"
                             src={_product}
-                            width="100"
-                            height="100"
-                            layout="responsive" />
+                            width="50"
+                            height="50"
+                            objectFit="contain" />
                         </div>
                       );
                     })}
@@ -107,15 +106,13 @@ function TodaysDeal(params) {
                 </div>
               </div><div className="md:w-2/5">
                   <div className="w-full pl-20">
-                    {/* <h2 className="text-sm title-font text-gray-500 tracking-widest">
-      BRAND NAME
-    </h2> */}
+                    <h2 className="text-sm title-font font-bold  uppercase tracking-widest">{products.brand}</h2>
                     <h1 className="text-black text-3xl title-font font-bold tracking-wide mb-1">
                       {products.title}
                     </h1>
                     <div className="flex mb-4">
                       <Ratings
-                        rating={rattingValue}
+                        rating={products.rating}
                         widgetDimensions="20px"
                         widgetSpacings="1px"
                         widgetRatedColors="rgb(255, 169, 27)"
@@ -129,57 +126,24 @@ function TodaysDeal(params) {
                       <span className="text-gray-500 font-bold ml-3">
                         {randomNo(50, 150)} Reviews
                       </span>
-
-                      <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s">
-                        <a className="text-gray-500">
-                          <svg
-                            fill="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            className="w-5 h-5"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-                          </svg>
-                        </a>
-                        <a className="text-gray-500">
-                          <svg
-                            fill="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            className="w-5 h-5"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-                          </svg>
-                        </a>
-                        <a className="text-gray-500">
-                          <svg
-                            fill="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            className="w-5 h-5"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-                          </svg>
-                        </a>
+                    </div>
+                    <div className="flex mb-4">
+                      <span className="">
+                        {products.description}
                       </span>
                     </div>
                     <div className="flex tracking-wide">
                       <span className="title-font font-bold text-3xl text-gray-900">
-                        ${products.price}
+                      ${ productDiscount(products.price, products.discountPercentage)}
+                        
                       </span>
                       <span className="title-font font-bold text-3xl text-gray-500 line-through ml-3">
-                        ${products.price + randomNo(50, 100)}
+                      ${products.price}
                       </span>
                     </div>
                     <div className="mt-5">
                       <span className="title-font text-gray-500">
-                        Save 50% right now
+                        Save {products.discountPercentage}% right now
                       </span>
                     </div>
                     {/* <p className="leading-relaxed">{products.description}</p> */}

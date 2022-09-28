@@ -21,11 +21,16 @@ function FeaturedProducts() {
     try {
       var _;
       const res = await fetch(
-        `${endPoints.products}${defaultValues.featuredProduct}`
+        `${endPoints.dummyProducts}${defaultValues.dummyFeaturedProduct}`
       );
       const _data = await res.json();
+      
+      if( _data['products'].length > 0 ) {
+        setProducts(_data['products']);
+      }
 
-      setProducts(_data);
+      // console.log("data length: ",_data['products'].length)
+      // console.log("jfsdkfj",_data['products'])
       setLoading(false);
     } catch (err) {
       console.log("try catch error logs: =====> ", err);
@@ -61,17 +66,19 @@ function FeaturedProducts() {
         </section>
         <div className="flex flex-wrap">
           { products.length ? products.map((_product, index) => {
-            const { images, title, category, description, price, id } =
+            const { images, title, brand, description, rating, price, id, discountPercentage } =
               _product;
             return (
               <ProductList
                 key={index}
                 image={images[0]}
                 name={title}
-                category={category}
+                brand={brand}
                 description={description}
                 price={price}
                 id={price}
+                rating={rating}
+                discPercentage={discountPercentage}
               />
             );
           }): <FeaturedProductsError />}

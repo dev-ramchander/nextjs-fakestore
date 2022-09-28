@@ -4,18 +4,18 @@ import { randomNo } from "../../../../utils/functions";
 
 function CategoryList(props) {
   return (
-    <Link href={`/category/${props.id}`}>
-      <a href={`/category/${props.id}`}>
-        <div class="items-center text-center ">
+    <Link href={`/category/products/${props.slug}`}>
+      <a href={`/category/products/${props.slug}`}>
+        <div className="items-center text-center ">
           <Image
-            alt={props.name}
+            alt={props.id}
             className="flex-shrink-0 rounded-full object-cover object-center"
             src={props.image}
             height="170"
             width="170"
           />
-          <div class="w-full mt-5">
-            <h2 class="title-font tracking-widest title-font text-gray-900 font-bold uppercase">
+          <div className="w-full mt-5">
+            <h2 className="title-font tracking-widest title-font text-gray-900 font-bold uppercase">
               {props.name}
             </h2>
           </div>

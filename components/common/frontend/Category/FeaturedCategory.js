@@ -13,9 +13,46 @@ function FeaturedCategory() {
   const CategoryList = dynamic(() =>
     import("../../frontend/Category/CategoryList")
   );
+  
+  const FeaturedProductsError = dynamic(() =>
+    import("../../frontend/FakeStore/ErrorComponents/FeatureProductsError")
+  );
   useEffect(() => {
     setLoading(true);
-    fetchCategory();
+    //fetchCategory();
+    setCategory([
+      {
+        'id':1,
+        'slug':'smartphones',
+        'image':'https://m.media-amazon.com/images/I/51jweLlbeTL._SL1024_.jpg',
+        'name':'smartphones',
+      },
+      {
+        'id':2,
+        'slug':'home-decoration',
+        'image':'https://cdn.dribbble.com/users/949592/screenshots/3580546/day-29-up.png',
+        'name':'Decoration',
+      },
+      {
+        'id':3,
+        'slug':'mens-shoes',
+        'image':'https://api.lorem.space/image/shoes?w=640&h=480&r=818',
+        'name':'shoes',
+      },
+      {
+        'id':4,
+        'slug':'laptops',
+        'image':'https://media.istockphoto.com/photos/happy-business-woman-holding-laptop-picture-id908275442?k=20&m=908275442&s=612x612&w=0&h=qsfPd4_WXkYDcV2vS1676aQ5Rm7MWUHyyNY03fCgnRs=',
+        'name':'laptops',
+      },
+      {
+        'id':5,
+        'slug':'furniture',
+        'image':'https://media.istockphoto.com/photos/office-room-with-desk-computer-and-chair-in-red-background-monochrome-picture-id1278524248?k=20&m=1278524248&s=612x612&w=0&h=cpmkwh_Hsqheh8aVOl8OFEXYDMaT0z8HvVfjvsnI7Zc=',
+        'name':'furniture',
+      },
+  ]);
+    setLoading(false);
   }, []);
 
   const fetchCategory = async () => {
@@ -58,13 +95,14 @@ function FeaturedCategory() {
           </div>
         </section>
 
-        <section class="text-gray-600 body-font">
-          <div class="container p5 mx-auto rounded-lg bg-gray-100 py-5">
-            <div class="grid grid-cols-5 gap-2 justify-items-center">
+        <section className="flex text-gray-600 body-font">
+          {/* <FeaturedProductsError />  */}
+          <div className="container p5 mx-auto rounded-lg bg-gray-100 py-5">
+            <div className="grid grid-cols-5 gap-2 justify-items-center">
               {category.map((_category, index) => {
-                const { image, name, id } = _category;
+                const { image, name, slug, id } = _category;
                 return (
-                  <CategoryList key={index} image={image} name={name} id={id} />
+                  <CategoryList key={index} image={image} name={name} id={id} slug={slug} />
                 );
               })}
             </div>

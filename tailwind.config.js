@@ -7,6 +7,9 @@ module.exports = {
   theme: {
     container: {
       center: true,
+      fontFamily: {
+        'body': ['Whitney',],
+      }
       
     },
     fontFamily: {
@@ -22,6 +25,7 @@ module.exports = {
         '4xl': '2rem',
       }
     }
+    
   },
   plugins: [
     require('tailwindcss'),
